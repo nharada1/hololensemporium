@@ -1,5 +1,3 @@
-# Firebase: Build a Real Time Web Chat App Codelab - Start code
+Event planning in real life. Work with vendors to visualize floor layouts before they happen, and pay vendors together in one click. Built for Hololens with Unity and Firebase by some cool developers.
 
-This folder contains the starting code for the [Firebase: Build a Real Time Web Chat App Codelab](https://codelabs.developers.google.com/codelabs/firebase-web/).
-
-If you'd like to jump directly to the end and see the finished code head to the [web](../web) directory.
+This work based on [this starter code](https://codelabs.developers.google.com/codelabs/firebase-web/).
