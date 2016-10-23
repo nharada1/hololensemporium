@@ -55,7 +55,7 @@
     <header class="mdl-layout__header mdl-color-text--white mdl-color--deep-purple-700">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                <h3><i class="material-icons">chat_bubble_outline</i> Hololens Emporium</h3>
+                <h3><i class="material-icons">event_seat</i> Hololens Emporium</h3>
             </div>
             <div id="user-container">
                 <div hidden id="user-pic"></div>
@@ -79,23 +79,26 @@
                     <div id="messages">
                         <span id="message-filler"></span>
                     </div>
-                    <form id="message-form" action="#">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="message">
-                            <label class="mdl-textfield__label" for="message">Message...</label>
-                        </div>
-                        <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                            Send
+                    <form id="image-form" action="#">
+                        <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+                            <i class="material-icons">file_upload</i>
                         </button>
                     </form>
-                    <form id="image-form" action="#">
-                        <input id="mediaCapture" type="file" accept="image/*,capture=camera">
-                        <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
-                            <i class="material-icons">image</i>
+                    <form id="message-form" action="#">
+                        <input id="mediaCapture" type="file" accept="*">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="message">
+                            <label class="mdl-textfield__label" for="message">Model Description</label>
+                        </div>
+                        <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                            Save Model
                         </button>
                     </form>
                 </div>
             </div>
+
+            <!-- PAYMENTS BELOW HERE -->
+            <!-- END PAYMENTS -->
 
             <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
                 <div class="mdl-snackbar__text"></div>
@@ -112,11 +115,11 @@
 <script>
     // Initialize Firebase
     var config = {
-        apiKey: "AIzaSyAJ23CQgBqLOPinAxWDCO1cH7Uxm18eOlg",
-        authDomain: "hololens-emporium.firebaseapp.com",
-        databaseURL: "https://hololens-emporium.firebaseio.com",
-        storageBucket: "hololens-emporium.appspot.com",
-        messagingSenderId: "817651995914"
+        apiKey: "AIzaSyClTMpay8LlcdIm3p5HGByBmW0tec1fp3w",
+        authDomain: "event-planner-d7679.firebaseapp.com",
+        databaseURL: "https://event-planner-d7679.firebaseio.com",
+        storageBucket: "event-planner-d7679.appspot.com",
+        messagingSenderId: "68874708735"
     };
     firebase.initializeApp(config);
 </script>

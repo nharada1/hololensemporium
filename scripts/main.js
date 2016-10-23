@@ -46,8 +46,8 @@ function FriendlyChat() {
     // Events for image upload.
     this.submitImageButton.addEventListener('click', function() {
         this.mediaCapture.click();
+        this.submitImageButton.setAttribute('class', 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--blue mdl-color-text--white')
     }.bind(this));
-    this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
     this.initFirebase();
 }
@@ -64,17 +64,67 @@ FriendlyChat.prototype.initFirebase = function() {
 
 // Loads chat messages history and listens for upcoming ones.
 FriendlyChat.prototype.loadMessages = function() {
-    // TODO(DEVELOPER): Load and listens for new messages.
+    var uid = this.auth.currentUser.uid;
+    // Reference to the /messages/ database path.
+    this.messagesRef = this.database.ref(uid);
+    // Make sure we remove all previous listeners.
+    this.messagesRef.off();
+
+    // Loads the last 12 messages and listen for new ones.
+    var setMessage = function(data) {
+        var val = data.val();
+        this.displayMessage(data.key, val.modelUrl, val.text, val.photoUrl, val.imageUrl);
+    }.bind(this);
+    this.messagesRef.limitToLast(12).on('child_added', setMessage);
+    this.messagesRef.limitToLast(12).on('child_changed', setMessage);
 };
 
 // Saves a new message on the Firebase DB.
 FriendlyChat.prototype.saveMessage = function(e) {
     e.preventDefault();
-    // Check that the user entered a message and is signed in.
-    if (this.messageInput.value && this.checkSignedInWithMessage()) {
+    var file = e.target[0].files[0];
 
-        // TODO(DEVELOPER): push new message to Firebase.
-
+    // Check if the file is an image.
+    var fileSuff = file.name.split('.').pop();
+    if (fileSuff !== "FBX") {
+        var data = {
+            message: "Filetype not recognized, please use FBX files",
+            timeout: 2000
+        };
+        this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+        return;
+    }
+    // Check if the user is signed-in
+    if (this.checkSignedInWithMessage()) {
+        // We add a message with a loading icon that will get updated with the shared image.
+        var currentUser = this.auth.currentUser;
+        this.messagesRef.push({
+            name: currentUser.displayName,
+            text: this.messageInput.value,
+            modelUrl: 'Please wait ... uploading your model file',
+            photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+        }).then(function(data) {
+            // Clear the selection in the file picker input.
+            this.imageForm.reset();
+            this.messageForm.reset();
+            this.submitImageButton.setAttribute('class', 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white')
+            // Reset the message and retoggle
+            FriendlyChat.resetMaterialTextfield(this.messageInput);
+            this.toggleButton();
+            // Upload the file to Firebase Storage.
+            this.storage.ref(currentUser.uid + '/' + Date.now() + '/' + file.name)
+                .put(file, {contentType: file.type})
+                .then(function(snapshot) {
+                    // Get the file's Storage URI and update the chat message placeholder.
+                    var filePath = snapshot.metadata.fullPath;
+                    this.storage.ref(filePath).getDownloadURL()
+                        .then(function(url) {
+                            data.update({modelUrl: url});
+                        })
+                }.bind(this)).catch(function(error) {
+                console.error('There was an error uploading a file to Firebase Storage:', error);
+            });
+        }.bind(this));
     }
 };
 
@@ -83,31 +133,6 @@ FriendlyChat.prototype.setImageUrl = function(imageUri, imgElement) {
     imgElement.src = imageUri;
 
     // TODO(DEVELOPER): If image is on Firebase Storage, fetch image URL and set img element's src.
-};
-
-// Saves a new message containing an image URI in Firebase.
-// This first saves the image in Firebase storage.
-FriendlyChat.prototype.saveImageMessage = function(event) {
-    var file = event.target.files[0];
-
-    // Clear the selection in the file picker input.
-    this.imageForm.reset();
-
-    // Check if the file is an image.
-    if (!file.type.match('image.*')) {
-        var data = {
-            message: 'You can only share images',
-            timeout: 2000
-        };
-        this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
-        return;
-    }
-    // Check if the user is signed-in
-    if (this.checkSignedInWithMessage()) {
-        if (this.auth.currentUser) {
-            return true;
-        }
-    }
 };
 
 // Signs-in Friendly Chat.
@@ -157,7 +182,9 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
 
 // Returns true if user is signed-in. Otherwise false and displays a message.
 FriendlyChat.prototype.checkSignedInWithMessage = function() {
-    /* TODO(DEVELOPER): Check if user is signed-in Firebase. */
+    if (this.auth.currentUser) {
+        return true;
+    }
 
     // Display a message to the user using a Toast.
     var data = {
@@ -179,6 +206,8 @@ FriendlyChat.MESSAGE_TEMPLATE =
         '<div class="message-container">' +
             '<div class="spacing"><div class="pic"></div></div>' +
             '<div class="message"></div>' +
+            '<div class="plus"><i class="material-icons">add</i></div>' +
+            '<div class="minus"><i class="material-icons">remove</i></div>' +
             '<div class="name"></div>' +
         '</div>';
 
@@ -223,7 +252,7 @@ FriendlyChat.prototype.displayMessage = function(key, name, text, picUrl, imageU
 // Enables or disables the submit button depending on the values of the input
 // fields.
 FriendlyChat.prototype.toggleButton = function() {
-    if (this.messageInput.value) {
+    if (this.messageInput.value && this.mediaCapture.files.length==1) {
         this.submitButton.removeAttribute('disabled');
     } else {
         this.submitButton.setAttribute('disabled', 'true');

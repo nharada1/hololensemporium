@@ -90,6 +90,9 @@ main, #messages-card {
   width: calc(100% - 40px);
   padding: 5px 0 5px 10px;
 }
+.message-container .plus {
+  display: table-cell;
+}
 .message-container .name {
   display: inline-block;
   width: 100%;
@@ -102,14 +105,14 @@ main, #messages-card {
 #message-form {
   display: flex;
   flex-direction: row;
-  width: calc(100% - 48px);
-  float: left;
+  width: calc(100% - 60px);
+  float: right;
 }
 #image-form {
   display: flex;
   flex-direction: row;
   width: 48px;
-  float: right;
+  float: left;
 }
 #message-form .mdl-textfield {
   width: calc(100% - 100px);
