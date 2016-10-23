@@ -32,6 +32,7 @@ function FriendlyChat() {
     this.signInButton = document.getElementById('sign-in');
     this.signOutButton = document.getElementById('sign-out');
     this.signInSnackbar = document.getElementById('must-signin-snackbar');
+    this.totalCost = document.getElementById('total')
 
     // Saves message on form submit.
     this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
@@ -62,6 +63,25 @@ FriendlyChat.prototype.initFirebase = function() {
         this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
+
+// Loads chat messages history and listens for upcoming ones.
+FriendlyChat.prototype.loadTotal = function() {
+    var uid = this.auth.currentUser.uid;
+    // Reference to the /messages/ database path.
+    this.messagesRef = this.database.ref(uid);
+
+    var that = this;
+    this.messagesRef.on('value', function(snapshot) {
+        var snap = snapshot.val();
+        console.log(snap)
+        var sum = 0;
+        for (var key in snap) {
+            sum += snap[key].cost*snap[key].count;
+        }
+        that.totalCost.innerHTML = 'Total&nbsp<div style="color:green">$'+sum.toString()+'</div>';
+    });
+};
+
 // Loads chat messages history and listens for upcoming ones.
 FriendlyChat.prototype.loadMessages = function() {
     var uid = this.auth.currentUser.uid;
@@ -73,7 +93,7 @@ FriendlyChat.prototype.loadMessages = function() {
     // Loads the last 12 messages and listen for new ones.
     var setMessage = function(data) {
         var val = data.val();
-        this.displayMessage(data.key, val.modelUrl, val.text, val.photoUrl, val.imageUrl);
+        this.displayMessage(data.key, val.modelUrl, val.text, val.photoUrl, val.imageUrl, val.count, val.vendor, val.cost);
     }.bind(this);
     this.messagesRef.limitToLast(12).on('child_added', setMessage);
     this.messagesRef.limitToLast(12).on('child_changed', setMessage);
@@ -169,6 +189,7 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
 
         // We load currently existing chant messages.
         this.loadMessages();
+        this.loadTotal();
     } else { // User is signed out!
         // Hide user's profile and sign-out button.
         this.userName.setAttribute('hidden', 'true');
@@ -205,17 +226,61 @@ FriendlyChat.resetMaterialTextfield = function(element) {
 FriendlyChat.MESSAGE_TEMPLATE =
         '<div class="message-container">' +
             '<div class="spacing"><div class="pic"></div></div>' +
-            '<div class="message"></div>' +
+            '<div class="count"></div>' +
             '<div class="plus"><i class="material-icons">add</i></div>' +
             '<div class="minus"><i class="material-icons">remove</i></div>' +
-            '<div class="name"></div>' +
+            '<div class="message"></div>' +
+            '<div class="cost"></div>' +
+            '<div class="vendor"></div>' +
         '</div>';
 
 // A loading image URL.
 FriendlyChat.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
+// Add one
+FriendlyChat.prototype.add = function(key) {
+    var div = document.getElementById(key);
+    var cnt;
+    // div.querySelector('.count').textContent = cnt.toString()
+
+    // Check if the user is signed-in
+    if (this.checkSignedInWithMessage()) {
+        // We add a message with a loading icon that will get updated with the shared image.
+        var currentUser = this.auth.currentUser;
+        var that = this;
+        return this.database.ref(currentUser.uid + '/' + key).once('value').then(function(snapshot) {
+            cnt = snapshot.val().count;
+            cnt += 1;
+            that.database.ref(currentUser.uid + '/' + key + '/count').set(cnt);
+        })
+    }
+}
+
+// Remove one
+FriendlyChat.prototype.remove = function(key) {
+    var div = document.getElementById(key);
+    var cnt;
+    // div.querySelector('.count').textContent = cnt.toString()
+
+    // Check if the user is signed-in
+    if (this.checkSignedInWithMessage()) {
+        // We add a message with a loading icon that will get updated with the shared image.
+        var currentUser = this.auth.currentUser;
+        var that = this;
+        return this.database.ref(currentUser.uid + '/' + key).once('value').then(function(snapshot) {
+            cnt = snapshot.val().count;
+            if (cnt > 0) {
+                cnt -= 1;
+            }
+            that.database.ref(currentUser.uid + '/' + key + '/count').set(cnt);
+        })
+    }
+}
+
 // Displays a Message in the UI.
-FriendlyChat.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
+var remove_bound = {};
+var add_bound = {};
+FriendlyChat.prototype.displayMessage = function(key, modelUrl, text, picUrl, imageUri, count, vendor, cost) {
     var div = document.getElementById(key);
     // If an element for that message does not exists yet we create it.
     if (!div) {
@@ -228,7 +293,24 @@ FriendlyChat.prototype.displayMessage = function(key, name, text, picUrl, imageU
     if (picUrl) {
         div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
     }
-    div.querySelector('.name').textContent = name;
+    div.querySelector('.count').textContent = count;
+    div.querySelector('.vendor').textContent = vendor+", $"+cost.toString()+" each";
+    div.querySelector('.cost').textContent = cost*count;
+
+    div.querySelector('.plus').setAttribute("id", "plus_"+key)
+    var obj = document.getElementById("plus_"+key);
+    if (!add_bound[key]) {
+        obj.addEventListener('click', this.add.bind(this, key));
+        add_bound[key] = true;
+    }
+    div.querySelector('.minus').setAttribute("id", "minus_"+key)
+    var obj = document.getElementById("minus_"+key);
+    if (!remove_bound[key]) {
+        obj.addEventListener('click', this.remove.bind(this, key));
+        remove_bound[key] = true;
+    }
+
+    div.querySelector('.minus').setAttribute("onclick", "FriendlyChat.prototype.remove('"+key+"')")
     var messageElement = div.querySelector('.message');
     if (text) { // If the message is text.
         messageElement.textContent = text;
