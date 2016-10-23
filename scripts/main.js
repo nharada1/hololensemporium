@@ -32,7 +32,8 @@ function FriendlyChat() {
     this.signInButton = document.getElementById('sign-in');
     this.signOutButton = document.getElementById('sign-out');
     this.signInSnackbar = document.getElementById('must-signin-snackbar');
-    this.totalCost = document.getElementById('total')
+    this.totalCost = document.getElementById('total');
+    this.thankYou = document.getElementById('thank-you');
 
     // Saves message on form submit.
     this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
@@ -73,7 +74,6 @@ FriendlyChat.prototype.loadTotal = function() {
     var that = this;
     this.messagesRef.on('value', function(snapshot) {
         var snap = snapshot.val();
-        console.log(snap)
         var sum = 0;
         for (var key in snap) {
             sum += snap[key].cost*snap[key].count;
@@ -81,6 +81,34 @@ FriendlyChat.prototype.loadTotal = function() {
         that.totalCost.innerHTML = 'Total&nbsp<div style="color:green">$'+sum.toString()+'</div>';
     });
 };
+
+// Loads chat messages history and listens for upcoming ones.
+FriendlyChat.prototype.loadThankYou = function() {
+    var uid = this.auth.currentUser.uid;
+    // Reference to the /messages/ database path.
+    this.messagesRef = this.database.ref(uid);
+
+    var that = this;
+    this.messagesRef.on('value', function(snapshot) {
+        var sums = {};
+        var snap = snapshot.val();
+        for (var key in snap) {
+            var vendor = snap[key].vendor;
+            if (!sums[vendor]) {
+                sums[vendor] = 0;
+            }
+            var sum = snap[key].cost*snap[key].count;
+            console.log(vendor, sum, snap[key]);
+            sums[vendor] += sum;
+        }
+        for (var vendor in sums) {
+            console.log(sums[vendor])
+            that.displayThankYouMessage(vendor, sums[vendor]);
+        }
+        console.log(sums);
+    });
+};
+
 
 // Loads chat messages history and listens for upcoming ones.
 FriendlyChat.prototype.loadMessages = function() {
@@ -190,6 +218,8 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
         // We load currently existing chant messages.
         this.loadMessages();
         this.loadTotal();
+        this.loadThankYou();
+
     } else { // User is signed out!
         // Hide user's profile and sign-out button.
         this.userName.setAttribute('hidden', 'true');
@@ -234,6 +264,14 @@ FriendlyChat.MESSAGE_TEMPLATE =
             '<div class="vendor"></div>' +
         '</div>';
 
+FriendlyChat.THANK =
+        '<div class="thank-container">' +
+            '<div class="thankspacing"></div>' +
+            '<div class="thankmessage"></div>' +
+            '<div class="thanktotaleach"></div>' +
+        '</div>';
+
+
 // A loading image URL.
 FriendlyChat.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
@@ -276,6 +314,31 @@ FriendlyChat.prototype.remove = function(key) {
         })
     }
 }
+
+
+// Displays a Message in the UI.
+FriendlyChat.prototype.displayThankYouMessage = function(vendor, total) {
+    var div = document.getElementById(vendor);
+    // If an element for that message does not exists yet we create it.
+    if (!div) {
+        var container = document.createElement('div');
+        container.innerHTML = FriendlyChat.THANK;
+        div = container.firstChild;
+        div.setAttribute('id', vendor);
+        this.thankYou.appendChild(div);
+    }
+    div.querySelector('.thanktotaleach').textContent = total;
+
+    var messageElement = div.querySelector('.thankmessage');
+    messageElement.textContent = vendor;
+    // Replace all line breaks by <br>.
+    messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
+    // Show the card fading-in.
+    setTimeout(function() {div.classList.add('visible')}, 1);
+    this.messageList.scrollTop = this.messageList.scrollHeight;
+    this.messageInput.focus();
+};
+
 
 // Displays a Message in the UI.
 var remove_bound = {};

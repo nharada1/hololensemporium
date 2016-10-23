@@ -59,6 +59,41 @@ main, #messages-card {
 #message-filler {
   flex-grow: 1;
 }
+.thank-container:first-of-type {
+  border-width-top: 0;
+}
+.thank-container {
+  display: block;
+  margin-top: 10px;
+  border-top: 1px solid #f3f3f3;
+  padding-top: 10px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.thank-container.visible {
+  opacity: 1;
+}
+.thank-container .thankspacing {
+  display: table-cell;
+  vertical-align: top;
+}
+.thank-container .thankmessage {
+  display: table-cell;
+  padding: 20px;
+  font-size: 16pt;
+  width: 100%;
+}
+.thank-container .thanktotaleach {
+  display: table-cell;
+  text-align: right;
+  padding: 20px;
+  margin: 20px;
+  font-size: 36pt;
+  color: green;
+}
+.thank-container .thanktotaleach:before {
+  content: '$';
+}
 .message-container:first-of-type {
   border-top-width: 0;
 }
@@ -87,7 +122,6 @@ main, #messages-card {
 }
 .message-container .message {
   display: table-cell;
-  width: calc(100% - 40px);
   padding: 5px 0 5px 10px;
   font-size: 16pt;
   width: 78%;
@@ -135,6 +169,17 @@ main, #messages-card {
   flex-direction: row;
   width: 48px;
   float: left;
+}
+.totaleach {
+  display: flex;
+  flex-direction: row;
+  float: right;
+  color: green;
+  padding: 5px 0 5px 15px;
+  font-size: 36pt;
+}
+.totaleach:before {
+  content: '$';
 }
 #total{
   display: flex;

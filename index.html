@@ -42,6 +42,8 @@
     <!-- Material Design Lite -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
     <!-- App Styling -->
@@ -98,14 +100,56 @@
                         </button>
                     </form>
                 </div>
-            </div>
 
             <!-- PAYMENTS BELOW HERE -->
-            <!-- END PAYMENTS -->
+                <!-- Visa Checkout Code -->
+                <script type="text/javascript">
+                    function onVisaCheckoutReady(){
+                        V.init( {
+                            apikey: "UOU93HWIY2WMP0TMEURT21YOVZXMVrwBNLy9Wh5qoIy3aGErc",
+                            paymentRequest:{
+                                currencyCode: "USD",
+                                total: "10.00"
+                            }
+                        });
+                        V.on("payment.success", function(payment)
+                        {
+                            $("#messages-card").hide();
+                            $("#thank-you").show();
 
-            <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
-                <div class="mdl-snackbar__text"></div>
-                <button class="mdl-snackbar__action" type="button"></button>
+                            //alert(JSON.stringify(payment));
+                        });
+                        V.on("payment.cancel", function(payment)
+                        {
+                            $("#messages-card").hide();
+                            $("#thank-you").show();
+                            //alert(JSON.stringify(payment));
+                            //alert(JSON.stringify(payment));
+                        });
+                        V.on("payment.error", function(payment, error)
+                        {
+                            alert('------> error');
+                            // alert(JSON.stringify(error));
+                        });
+                    }
+                </script>
+
+                <div style="margin: 10px;"><img alt="Visa Checkout" class="v-button" role="button"
+                     src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png"/></div>
+                <script type="text/javascript"
+                        src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+                </script>
+                <!-- END PAYMENTS -->
+
+                <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
+                    <div class="mdl-snackbar__text"></div>
+                    <button class="mdl-snackbar__action" type="button"></button>
+                </div>
+            </div>
+
+            <div id="thank-you">
+                    <h2>Thank You!</h2>
+                    <p><h4>The following merchants have been paid:</h4></p>
             </div>
 
         </div>
@@ -125,6 +169,7 @@
         messagingSenderId: "68874708735"
     };
     firebase.initializeApp(config);
+    $("#thank-you").hide();
 </script>
 <script src="scripts/main.js"></script>
 </body>
