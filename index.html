@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Save your 3d models for use in hololens">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friendly Chat</title>
+    <title>Hololens Emporium</title>
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -57,7 +57,7 @@
     <header class="mdl-layout__header mdl-color-text--white mdl-color--deep-purple-700">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                <h3><i class="material-icons">event_seat</i> Hololens Emporium</h3>
+                <h3><i class="header-icon material-icons">event_seat</i> Hololens Emporium</h3>
             </div>
             <div id="user-container">
                 <div hidden id="user-pic"></div>
@@ -82,7 +82,7 @@
                         <span id="message-filler"></span>
                     </div>
                     <div id="total">
-                        $100
+                        $0
                     </div>
                     <form style="display:none" id="image-form" action="#">
                         <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
@@ -105,11 +105,13 @@
                 <!-- Visa Checkout Code -->
                 <script type="text/javascript">
                     function onVisaCheckoutReady(){
+                        var toPay = $("#total").textContent;
+                        console.log(toPay)
                         V.init( {
                             apikey: "UOU93HWIY2WMP0TMEURT21YOVZXMVrwBNLy9Wh5qoIy3aGErc",
                             paymentRequest:{
                                 currencyCode: "USD",
-                                total: "10.00"
+                                total: toPay
                             }
                         });
                         V.on("payment.success", function(payment)
@@ -121,14 +123,11 @@
                         });
                         V.on("payment.cancel", function(payment)
                         {
-                            $("#messages-card").hide();
-                            $("#thank-you").show();
                             //alert(JSON.stringify(payment));
                             //alert(JSON.stringify(payment));
                         });
                         V.on("payment.error", function(payment, error)
                         {
-                            alert('------> error');
                             // alert(JSON.stringify(error));
                         });
                     }

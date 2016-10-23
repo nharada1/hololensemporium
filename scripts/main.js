@@ -98,14 +98,11 @@ FriendlyChat.prototype.loadThankYou = function() {
                 sums[vendor] = 0;
             }
             var sum = snap[key].cost*snap[key].count;
-            console.log(vendor, sum, snap[key]);
             sums[vendor] += sum;
         }
         for (var vendor in sums) {
-            console.log(sums[vendor])
             that.displayThankYouMessage(vendor, sums[vendor]);
         }
-        console.log(sums);
     });
 };
 
@@ -180,7 +177,6 @@ FriendlyChat.prototype.saveMessage = function(e) {
 FriendlyChat.prototype.setImageUrl = function(imageUri, imgElement) {
     imgElement.src = imageUri;
 
-    // TODO(DEVELOPER): If image is on Firebase Storage, fetch image URL and set img element's src.
 };
 
 // Signs-in Friendly Chat.
@@ -279,7 +275,6 @@ FriendlyChat.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 FriendlyChat.prototype.add = function(key) {
     var div = document.getElementById(key);
     var cnt;
-    // div.querySelector('.count').textContent = cnt.toString()
 
     // Check if the user is signed-in
     if (this.checkSignedInWithMessage()) {
