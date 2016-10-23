@@ -1,6 +1,7 @@
 {
   "projects": {
     "hololens-emporium": "hololens-emporium",
-    "event": "event-planner-d7679"
+    "event": "event-planner-d7679",
+    "staging": "hololens-emporium-4ba65"
   }
 }

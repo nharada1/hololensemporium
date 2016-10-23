@@ -47,6 +47,37 @@
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="styles/main.css">
+
+    <!-- Visa Checkout Code -->
+    <script type="text/javascript">
+         function onVisaCheckoutReady(){
+          V.init( {
+          apikey: "UOU93HWIY2WMP0TMEURT21YOVZXMVrwBNLy9Wh5qoIy3aGErc",
+           paymentRequest:{
+            currencyCode: "USD",
+            total: "10.00"
+          }
+          });
+        V.on("payment.success", function(payment)
+          {
+            alert('------> success');
+            //alert(JSON.stringify(payment)); 
+        });
+        V.on("payment.cancel", function(payment)
+          {
+            alert('------> cancel');
+            //alert(JSON.stringify(payment)); 
+            //alert(JSON.stringify(payment)); 
+        });
+        V.on("payment.error", function(payment, error)
+          {
+            alert('------> error');
+            // alert(JSON.stringify(error)); 
+        });
+        }
+    </script>
+
+
 </head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -98,6 +129,12 @@
             </div>
 
             <!-- PAYMENTS BELOW HERE -->
+            <img alt="Visa Checkout" class="v-button" role="button"
+            src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png"/>
+            <script type="text/javascript"
+            src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+            </script>
+            
             <!-- END PAYMENTS -->
 
             <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
@@ -111,18 +148,22 @@
 
 <!-- Firebase -->
 
+
 <script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
 <script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyClTMpay8LlcdIm3p5HGByBmW0tec1fp3w",
-        authDomain: "event-planner-d7679.firebaseapp.com",
-        databaseURL: "https://event-planner-d7679.firebaseio.com",
-        storageBucket: "event-planner-d7679.appspot.com",
-        messagingSenderId: "68874708735"
-    };
-    firebase.initializeApp(config);
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD7H77AZu18Ye7w2-9YCYqfl5IYCqE22yw",
+    authDomain: "hololens-emporium-4ba65.firebaseapp.com",
+    databaseURL: "https://hololens-emporium-4ba65.firebaseio.com",
+    storageBucket: "hololens-emporium-4ba65.appspot.com",
+    messagingSenderId: "998541145408"
+  };
+  firebase.initializeApp(config);
 </script>
+
+
+
 <script src="scripts/main.js"></script>
 </body>
 </html>

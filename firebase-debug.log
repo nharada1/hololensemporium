@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.0.8
+[debug] Platform:     darwin
+[debug] Node Version: v0.12.5
+[debug] Time:         Sat Oct 22 2016 21:25:07 GMT-0700 (PDT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/chris/Dropbox/hackathons/Money2020/hololensemporium
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://localhost:5000

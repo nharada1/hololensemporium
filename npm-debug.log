@@ -1,0 +1,210 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'firebase', '-g' ]
+2 info using npm@2.11.2
+3 info using node@v0.12.5
+4 verbose install initial load of /usr/local/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/lib/package.json
+6 silly cache add args [ 'firebase', null ]
+7 verbose cache add spec firebase
+8 silly cache add parsed spec { raw: 'firebase',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'firebase',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: '*',
+8 silly cache add   type: 'range' }
+9 silly addNamed firebase@*
+10 verbose addNamed "*" is a valid semver range for firebase
+11 silly addNameRange { name: 'firebase', range: '*', hasData: false }
+12 silly mapToRegistry name firebase
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/firebase
+16 verbose addNameRange registry:https://registry.npmjs.org/firebase not in flight; fetching
+17 verbose request uri https://registry.npmjs.org/firebase
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 7:14:12 PM
+20 verbose request id c69f6bd41502b369
+21 verbose etag "6FQTC50MVJGHFHUD9KXTLHYUW"
+22 http request GET https://registry.npmjs.org/firebase
+23 http 304 https://registry.npmjs.org/firebase
+24 silly get cb [ 304,
+24 silly get   { date: 'Sun, 23 Oct 2016 02:14:12 GMT',
+24 silly get     via: '1.1 varnish',
+24 silly get     'cache-control': 'max-age=300',
+24 silly get     etag: '"6FQTC50MVJGHFHUD9KXTLHYUW"',
+24 silly get     age: '52',
+24 silly get     connection: 'keep-alive',
+24 silly get     'x-served-by': 'cache-sea1927-SEA',
+24 silly get     'x-cache': 'HIT',
+24 silly get     'x-cache-hits': '17',
+24 silly get     'x-timer': 'S1477188852.637846,VS0,VE0',
+24 silly get     vary: 'Accept-Encoding' } ]
+25 verbose etag https://registry.npmjs.org/firebase from cache
+26 verbose get saving firebase to /Users/chris/.npm/registry.npmjs.org/firebase/.cache.json
+27 silly addNameRange number 2 { name: 'firebase', range: '*', hasData: true }
+28 silly addNameRange versions [ 'firebase',
+28 silly addNameRange   [ '0.0.0',
+28 silly addNameRange     '0.5.0',
+28 silly addNameRange     '0.5.1',
+28 silly addNameRange     '0.5.2',
+28 silly addNameRange     '0.5.3',
+28 silly addNameRange     '0.5.4',
+28 silly addNameRange     '0.6.0',
+28 silly addNameRange     '0.6.1',
+28 silly addNameRange     '0.6.2',
+28 silly addNameRange     '0.6.3',
+28 silly addNameRange     '0.6.4',
+28 silly addNameRange     '0.6.5',
+28 silly addNameRange     '0.6.6',
+28 silly addNameRange     '0.6.7',
+28 silly addNameRange     '0.6.8',
+28 silly addNameRange     '0.6.9',
+28 silly addNameRange     '0.6.10',
+28 silly addNameRange     '0.6.11',
+28 silly addNameRange     '0.6.14',
+28 silly addNameRange     '0.6.15',
+28 silly addNameRange     '0.6.16',
+28 silly addNameRange     '0.6.17',
+28 silly addNameRange     '0.6.19',
+28 silly addNameRange     '0.6.21',
+28 silly addNameRange     '0.6.22',
+28 silly addNameRange     '1.0.1',
+28 silly addNameRange     '1.0.1-npm',
+28 silly addNameRange     '1.0.2',
+28 silly addNameRange     '1.0.3',
+28 silly addNameRange     '1.0.4',
+28 silly addNameRange     '1.0.5',
+28 silly addNameRange     '1.0.10',
+28 silly addNameRange     '1.0.10-2',
+28 silly addNameRange     '1.0.11',
+28 silly addNameRange     '1.0.12',
+28 silly addNameRange     '1.0.13',
+28 silly addNameRange     '1.0.14',
+28 silly addNameRange     '1.0.15',
+28 silly addNameRange     '1.0.15-2',
+28 silly addNameRange     '1.0.15-3',
+28 silly addNameRange     '1.0.17',
+28 silly addNameRange     '1.0.18',
+28 silly addNameRange     '1.0.19',
+28 silly addNameRange     '1.0.20',
+28 silly addNameRange     '1.0.21',
+28 silly addNameRange     '1.0.23',
+28 silly addNameRange     '1.0.24',
+28 silly addNameRange     '1.1.0',
+28 silly addNameRange     '1.1.1',
+28 silly addNameRange     '1.1.2',
+28 silly addNameRange     '1.2.0-beta.1-0',
+28 silly addNameRange     '1.2.0-beta.2',
+28 silly addNameRange     '1.1.3',
+28 silly addNameRange     '1.2.0-beta.3',
+28 silly addNameRange     '2.0.0',
+28 silly addNameRange     '2.0.1',
+28 silly addNameRange     '2.0.2',
+28 silly addNameRange     '2.0.3',
+28 silly addNameRange     '2.0.4',
+28 silly addNameRange     '2.0.5',
+28 silly addNameRange     '2.0.6',
+28 silly addNameRange     '2.1.0',
+28 silly addNameRange     '2.1.1',
+28 silly addNameRange     '2.1.2',
+28 silly addNameRange     '1.2.0',
+28 silly addNameRange     '2.2.0',
+28 silly addNameRange     '2.2.1',
+28 silly addNameRange     '2.2.2',
+28 silly addNameRange     '2.2.3',
+28 silly addNameRange     '2.2.4',
+28 silly addNameRange     '2.2.5',
+28 silly addNameRange     '2.2.6',
+28 silly addNameRange     '2.2.7',
+28 silly addNameRange     '2.2.8',
+28 silly addNameRange     '2.2.9',
+28 silly addNameRange     '2.3.0',
+28 silly addNameRange     '2.3.1',
+28 silly addNameRange     '2.3.2',
+28 silly addNameRange     '2.4.0',
+28 silly addNameRange     '2.4.1',
+28 silly addNameRange     '2.4.2',
+28 silly addNameRange     '3.0.0',
+28 silly addNameRange     '3.0.1',
+28 silly addNameRange     '3.0.2',
+28 silly addNameRange     '3.0.3',
+28 silly addNameRange     '3.0.4',
+28 silly addNameRange     '3.0.5',
+28 silly addNameRange     '3.1.0',
+28 silly addNameRange     '3.2.0',
+28 silly addNameRange     '3.2.1',
+28 silly addNameRange     '3.3.0',
+28 silly addNameRange     '3.3.1',
+28 silly addNameRange     '3.3.2',
+28 silly addNameRange     '3.4.0',
+28 silly addNameRange     '3.4.1',
+28 silly addNameRange     '3.5.0',
+28 silly addNameRange     '3.5.1' ] ]
+29 silly addNamed firebase@3.5.1
+30 verbose addNamed "3.5.1" is a plain semver version for firebase
+31 silly cache afterAdd firebase@3.5.1
+32 verbose afterAdd /Users/chris/.npm/firebase/3.5.1/package/package.json not in flight; writing
+33 verbose afterAdd /Users/chris/.npm/firebase/3.5.1/package/package.json written
+34 silly install resolved [ { name: 'firebase',
+34 silly install resolved     version: '3.5.1',
+34 silly install resolved     description: 'Firebase JavaScript library for web and Node.js',
+34 silly install resolved     author:
+34 silly install resolved      { name: 'Firebase',
+34 silly install resolved        email: 'firebase-support@google.com',
+34 silly install resolved        url: 'https://firebase.google.com/' },
+34 silly install resolved     homepage: 'https://firebase.google.com/',
+34 silly install resolved     main: 'firebase-node.js',
+34 silly install resolved     browser: 'firebase-browser.js',
+34 silly install resolved     'react-native': 'firebase-react-native.js',
+34 silly install resolved     keywords: [ 'Firebase', 'realtime', 'database', 'storage', 'authentication' ],
+34 silly install resolved     dependencies:
+34 silly install resolved      { 'faye-websocket': '0.9.3',
+34 silly install resolved        jsonwebtoken: '5.7.0',
+34 silly install resolved        rsvp: '3.2.1',
+34 silly install resolved        'dom-storage': '2.0.2',
+34 silly install resolved        xmlhttprequest: '1.8.0' },
+34 silly install resolved     repository: { type: 'none', url: 'https://firebase.google.com/' },
+34 silly install resolved     types: 'firebase.d.ts',
+34 silly install resolved     _id: 'firebase@3.5.1',
+34 silly install resolved     _shasum: '1e689252f1b74985b4e18d052662eb4a01b5cfd2',
+34 silly install resolved     _resolved: 'https://registry.npmjs.org/firebase/-/firebase-3.5.1.tgz',
+34 silly install resolved     _from: 'firebase@*',
+34 silly install resolved     scripts: {},
+34 silly install resolved     _npmVersion: '2.15.0',
+34 silly install resolved     _nodeVersion: '0.12.13',
+34 silly install resolved     _npmUser: { name: 'firebase', email: 'operations+plainlogo@firebase.com' },
+34 silly install resolved     dist:
+34 silly install resolved      { shasum: '1e689252f1b74985b4e18d052662eb4a01b5cfd2',
+34 silly install resolved        tarball: 'https://registry.npmjs.org/firebase/-/firebase-3.5.1.tgz' },
+34 silly install resolved     maintainers: [ [Object] ],
+34 silly install resolved     _npmOperationalInternal:
+34 silly install resolved      { host: 'packages-18-east.internal.npmjs.com',
+34 silly install resolved        tmp: 'tmp/firebase-3.5.1.tgz_1476916499313_0.23871828336268663' },
+34 silly install resolved     directories: {},
+34 silly install resolved     readme: 'ERROR: No README data found!' } ]
+35 info install firebase@3.5.1 into /usr/local/lib
+36 info installOne firebase@3.5.1
+37 verbose installOne of firebase to /usr/local/lib not in flight; installing
+38 warn locking Error: EACCES, open '/Users/chris/.npm/_locks/firebase-c75cead283afbaa7.lock'
+38 warn locking     at Error (native)
+38 warn locking  /Users/chris/.npm/_locks/firebase-c75cead283afbaa7.lock failed { [Error: EACCES, open '/Users/chris/.npm/_locks/firebase-c75cead283afbaa7.lock']
+38 warn locking   errno: -13,
+38 warn locking   code: 'EACCES',
+38 warn locking   path: '/Users/chris/.npm/_locks/firebase-c75cead283afbaa7.lock' }
+39 verbose stack Error: Attempt to unlock /usr/local/lib/node_modules/firebase, which hasn't been locked
+39 verbose stack     at unlock (/usr/local/lib/node_modules/npm/lib/utils/locker.js:66:11)
+39 verbose stack     at cb (/usr/local/lib/node_modules/npm/lib/install.js:1017:5)
+39 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:1021:20
+39 verbose stack     at /usr/local/lib/node_modules/npm/lib/utils/locker.js:40:9
+39 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:149:38)
+39 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:177:38
+39 verbose stack     at FSReqWrap.oncomplete (fs.js:95:15)
+40 verbose cwd /Users/chris/Dropbox/hackathons/Money2020/hololensemporium
+41 error Darwin 14.5.0
+42 error argv "node" "/usr/local/bin/npm" "install" "firebase" "-g"
+43 error node v0.12.5
+44 error npm  v2.11.2
+45 error Attempt to unlock /usr/local/lib/node_modules/firebase, which hasn't been locked
+46 error If you need help, you may report this error at:
+46 error     <https://github.com/npm/npm/issues>
+47 verbose exit [ 1, true ]
